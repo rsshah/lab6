@@ -25,7 +25,9 @@ function addProjectDetails(e) {
 	var projectID = $(this).closest('.project').attr('id');
 	// get rid of 'project' from the front of the id 'project3'
 	var idNumber = projectID.substr('project'.length);
-
+	var projUrl = "/project/" + idNumber;
+	console.log("calling projUrl: " + projUrl);
+	$.get(projUrl, kappa);
 	console.log("User clicked on project " + idNumber);
 }
 
@@ -35,4 +37,26 @@ function addProjectDetails(e) {
  */
 function randomizeColors(e) {
 	console.log("User clicked on color button");
+	$.get("/palette", keepo);
+}
+
+function kappa(projJson) {
+	console.log("received projJson: " + projJson);
+	var projDetailsHtml = '<a href="#" class="thumbnail">"' +
+						  '<img src="' + projJson['image'] + '"" class="detailsImage">' +
+						  projJson['summary'] +
+						  '<p><small>' + projJson['date'] + '</small></p></a>';
+	console.log("projDetails:\n" + projDetailsHtml);
+	$("#project" + projJson.id + " .details").html(projDetailsHtml);
+}
+
+function keepo(result) {
+	console.log("result id: " + result.id);
+	var colors = result['colors'];
+	colors = colors['hex'];
+	$('body').css('background-color', colors[0]);
+	$('.thumbnail').css('background-color', colors[1]);
+	$('h1, h2, h3, h4, h5, h5').css('color', colors[2]);
+	$('p').css('color', colors[3]);
+	$('.project img').css('opacity', .75);
 }
