@@ -34,7 +34,7 @@ function addProjectDetails(e) {
 /*
  * Make an AJAX call to retrieve a color palette for the site
  * and apply it
- */
+ */ 
 function randomizeColors(e) {
 	console.log("User clicked on color button");
 	$.get("/palette", keepo);
@@ -51,7 +51,6 @@ function kappa(projJson) {
 }
 
 function keepo(result) {
-	console.log("result id: " + result.id);
 	var colors = result['colors'];
 	colors = colors['hex'];
 	$('body').css('background-color', colors[0]);
